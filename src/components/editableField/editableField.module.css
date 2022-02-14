@@ -1,0 +1,11 @@
+.itemTitle {
+    max-width: 150px;
+    width: 100%;
+    cursor: pointer;
+    transition: all .4s ease;
+}
+
+.itemTitle:hover {
+    text-decoration: underline;
+    transition: all .4s ease;
+}

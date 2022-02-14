@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react';
 
 import './App.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import MainPageContainer from './pages/mainPage/MainPageContainer';
+import MainPage from './pages/mainPage/MainPage';
 import ToDoListsContainer from './pages/toDoLists/ToDoListsContainer';
 import NavBarContainer from './components/navBar/NavBarContainer';
 
@@ -13,7 +13,7 @@ const App = (): ReactElement => (
       <div className="appContainer">
         <div className="appWrapper">
           <Routes>
-            <Route path="/" element={<MainPageContainer />} />
+            <Route path="/" element={<MainPage />} />
             <Route path="/toDoLists" element={<ToDoListsContainer />} />
           </Routes>
         </div>

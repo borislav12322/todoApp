@@ -12,10 +12,10 @@ type PropsType = {
 const NavBar = ({ navBarArray }: PropsType): ReactElement => (
   <header className={s.navBarContainer}>
     <div className={s.navBarWrapper}>
-      <div className={s.logoWrapper}>
+      <NavLink to="/" className={s.logoWrapper}>
         <img src={LogoPartOne} alt="logo" />
         <img src={LogoPartTwo} alt="logo" />
-      </div>
+      </NavLink>
       <div className={s.navLinksWrapper}>
         {navBarArray.map(navLinkItem => (
           <NavLink
