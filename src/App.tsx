@@ -10,10 +10,14 @@ const App = (): ReactElement => (
   <BrowserRouter>
     <div className="App">
       <NavBarContainer />
-      <Routes>
-        <Route path="/" element={<MainPageContainer />} />
-        <Route path="/toDoLists" element={<ToDoListsContainer />} />
-      </Routes>
+      <div className="appContainer">
+        <div className="appWrapper">
+          <Routes>
+            <Route path="/" element={<MainPageContainer />} />
+            <Route path="/toDoLists" element={<ToDoListsContainer />} />
+          </Routes>
+        </div>
+      </div>
     </div>
   </BrowserRouter>
 );
