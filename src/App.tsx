@@ -1,26 +1,21 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { ReactElement } from 'react';
 
-function App() {
-  return (
+import './App.css';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import MainPageContainer from './pages/mainPage/MainPageContainer';
+import ToDoListsContainer from './pages/toDoLists/ToDoListsContainer';
+import NavBarContainer from './components/navBar/NavBarContainer';
+
+const App = (): ReactElement => (
+  <BrowserRouter>
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <NavBarContainer />
+      <Routes>
+        <Route path="/" element={<MainPageContainer />} />
+        <Route path="/toDoLists" element={<ToDoListsContainer />} />
+      </Routes>
     </div>
-  );
-}
+  </BrowserRouter>
+);
 
 export default App;
