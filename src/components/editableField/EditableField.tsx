@@ -5,7 +5,6 @@ type PropsType = {
   editMode: boolean;
   showInput: () => void;
   text: string;
-  toDoId: number;
   changeToDoTitle: () => void;
   onKeyPressHandle: (e: KeyboardEvent<HTMLInputElement>) => void;
   inputValue: string;
@@ -17,7 +16,6 @@ const EditableField = React.memo(
     editMode,
     showInput,
     text,
-    toDoId,
     changeToDoTitle,
     onKeyPressHandle,
     inputValue,

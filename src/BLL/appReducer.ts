@@ -99,7 +99,7 @@ export const appReducer = (
       return state;
   }
 };
-
+// Action Creators
 export type GetToDoListsACType = ReturnType<typeof getToDoListsAC>;
 
 export const getToDoListsAC = (toDoLists: ToDoListType[]) =>
@@ -166,7 +166,7 @@ export const setCurrentPageAC = (currentPage: number) =>
     type: 'SET-CURRENT-PAGE',
     currentPage,
   } as const);
-
+// Thunk Creators
 export const getToDoListsTC =
   (pageSize: number, currentPage: number) => (dispatch: Dispatch) => {
     dispatch(setIsLoadingAC(true));
@@ -194,7 +194,6 @@ export const changeToDoListStatusTC =
       .changeToDoListStatus(id, completed)
       .then(res => {
         dispatch(changeToDoStatusAC(id, completed));
-        console.log(res.data);
       })
       .catch(err => {})
       .finally(() => {
@@ -209,7 +208,6 @@ export const changeToDoListTitleTC =
       .changeToDoListTitle(id, title)
       .then(res => {
         dispatch(changeToDoTitleAC(id, title));
-        console.log(res.data);
       })
       .catch(err => {})
       .finally(() => {
@@ -222,7 +220,6 @@ export const removeToDoListTC = (id: number) => (dispatch: Dispatch) => {
     .removeToDoList(id)
     .then(res => {
       dispatch(deleteToDoAC(id));
-      console.log(res.data);
     })
     .catch(err => {})
     .finally(() => {
@@ -236,7 +233,6 @@ export const addNewToDoListTC = (title: string) => (dispatch: Dispatch) => {
     .addNewToDoList(title)
     .then(res => {
       dispatch(addToDoListAC(title, res.data.id));
-      console.log(res.data);
     })
     .catch(err => {})
     .finally(() => {

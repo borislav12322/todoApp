@@ -43,7 +43,6 @@ const EditableFieldContainer = React.memo(({ text, toDoId }: PropsType): ReactEl
       editMode={editMode}
       showInput={showInput}
       text={text}
-      toDoId={toDoId}
       changeToDoTitle={changeToDoTitle}
       onKeyPressHandle={onKeyPressHandle}
       inputValue={inputValue}

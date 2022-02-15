@@ -57,12 +57,13 @@ const ToDoListsContainer = (): ReactElement => {
     },
     [dispatch],
   );
-  console.log(toDoLists);
 
   useEffect(() => {
-    dispatch(getToDoListsTC(pageSize, currentPage));
     dispatch(getToDoListsCountTC());
   }, [dispatch]);
+  useEffect(() => {
+    dispatch(getToDoListsTC(pageSize, currentPage));
+  }, [dispatch, pageSize, currentPage]);
 
   return (
     <ToDoLists
