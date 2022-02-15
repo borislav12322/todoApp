@@ -12,16 +12,18 @@ import {
   addToDoListAC,
   changeToDoStatusAC,
   deleteToDoAC,
+  getToDoListsCountTC,
   getToDoListsTC,
-  ToDoListType,
+  InitialStateType,
 } from '../../BLL/appReducer';
 
 const ToDoListsContainer = (): ReactElement => {
   const dispatch = useDispatch();
   const [newTitleValue, setNewTitleValue] = useState<string>('');
-  const toDoLists = useSelector<AppRootStateType, ToDoListType[]>(
-    state => state.appReducer.toDoLists,
-  );
+  const { toDoLists, currentPage, pageSize } = useSelector<
+    AppRootStateType,
+    InitialStateType
+  >(state => state.appReducer);
 
   const changeToDoStatus = (id: number, status: boolean): void => {
     dispatch(changeToDoStatusAC(id, status));
@@ -45,7 +47,8 @@ const ToDoListsContainer = (): ReactElement => {
   };
 
   useEffect(() => {
-    dispatch(getToDoListsTC());
+    dispatch(getToDoListsTC(pageSize, currentPage));
+    dispatch(getToDoListsCountTC());
   }, []);
 
   return (

@@ -3,8 +3,13 @@
     flex-direction: column;
 }
 
-.title {
+.toDoListTop{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     margin-bottom: 20px;
+}
+.title {
     font-size: 30px;
 }
 

@@ -8,9 +8,12 @@ export interface ToDoListType {
   completed: boolean;
 }
 
-interface InitialStateType {
+export interface InitialStateType {
   toDoLists: ToDoListType[];
   isLoading: boolean;
+  pageSize: number;
+  currentPage: number;
+  toDoListsCount: number;
 }
 type ActionsType =
   | GetToDoListsACType
@@ -18,11 +21,16 @@ type ActionsType =
   | AddToDoListACType
   | ChangeToDoStatusACType
   | ChangeToDoTitleACType
-  | DeleteToDoACType;
+  | DeleteToDoACType
+  | SetToDoListsCountACType
+  | SetCurrentPageACType;
 
 const initialState = {
   toDoLists: [],
   isLoading: false,
+  pageSize: 25,
+  currentPage: 1,
+  toDoListsCount: 0,
 };
 
 export const appReducer = (
@@ -76,6 +84,16 @@ export const appReducer = (
       return {
         ...state,
         toDoLists: [...state.toDoLists.filter(item => item.id !== action.id)],
+      };
+    case 'SET-TO-DO-LISTS-COUNT':
+      return {
+        ...state,
+        toDoListsCount: action.count,
+      };
+    case 'SET-CURRENT-PAGE':
+      return {
+        ...state,
+        currentPage: action.currentPage,
       };
     default:
       return state;
@@ -132,9 +150,32 @@ export const deleteToDoAC = (id: number) =>
     id,
   } as const);
 
-export const getToDoListsTC = () => (dispatch: Dispatch) => {
-  dispatch(setIsLoadingAC(true));
-  toDoAPI.getToDoLists().then(res => {
-    dispatch(getToDoListsAC(res.data.splice(+'0', +'25')));
+export type SetToDoListsCountACType = ReturnType<typeof setToDoListsCountAC>;
+
+export const setToDoListsCountAC = (count: number) =>
+  ({
+    type: 'SET-TO-DO-LISTS-COUNT',
+    count,
+  } as const);
+
+export type SetCurrentPageACType = ReturnType<typeof setCurrentPageAC>;
+
+export const setCurrentPageAC = (currentPage: number) =>
+  ({
+    type: 'SET-CURRENT-PAGE',
+    currentPage,
+  } as const);
+
+export const getToDoListsTC =
+  (pageSize: number, currentPage: number) => (dispatch: Dispatch) => {
+    dispatch(setIsLoadingAC(true));
+    toDoAPI.getToDoLists(pageSize, currentPage).then(res => {
+      dispatch(getToDoListsAC(res.data));
+    });
+  };
+
+export const getToDoListsCountTC = () => (dispatch: Dispatch) => {
+  toDoAPI.getToDoListsCount().then(res => {
+    dispatch(setToDoListsCountAC(res.data.length));
   });
 };

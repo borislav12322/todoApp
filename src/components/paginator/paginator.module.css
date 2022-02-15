@@ -1,0 +1,37 @@
+.numbersWrapper{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    column-gap: 10px;
+}
+
+.number{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all .5s ease;
+    width: 24px;
+    height: 24px;
+    text-align: center;
+}
+.number:hover{
+    text-decoration: underline;
+    transition: all .5s ease;
+}
+
+.btnNav{
+    width: 20px;
+    height: 20px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+.icon{
+    object-fit: cover;
+    width: 20px;
+    height: 20px;
+}
+.iconPrev{
+    transform: rotate(180deg);
+}
