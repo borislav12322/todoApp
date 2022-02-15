@@ -9,7 +9,7 @@ export type NavBarItemType = {
 
 const NavBarContainer = (): ReactElement => {
   const navBarArray: NavBarItemType[] = [
-    { id: 1, name: 'Main Page', link: '/' },
+    { id: 1, name: 'Main Page', link: '/todoApp' },
     { id: 2, name: 'To Do Lists', link: '/toDoLists' },
   ];
 
