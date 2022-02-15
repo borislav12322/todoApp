@@ -13,7 +13,7 @@ const NavBar = React.memo(
   ({ navBarArray }: PropsType): ReactElement => (
     <header className={s.navBarContainer}>
       <div className={s.navBarWrapper}>
-        <NavLink to="/" className={s.logoWrapper}>
+        <NavLink to="/todoApp" className={s.logoWrapper}>
           <img src={LogoPartOne} alt="logo" />
           <img src={LogoPartTwo} alt="logo" />
         </NavLink>

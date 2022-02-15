@@ -22,7 +22,7 @@ const App = (): ReactElement => {
           {isLoading && <LoadingComponent />}
           <div className="appWrapper">
             <Routes>
-              <Route path="/" element={<MainPage />} />
+              <Route path="/todoApp" element={<MainPage />} />
               <Route path="/toDoLists" element={<ToDoListsContainer />} />
             </Routes>
           </div>
