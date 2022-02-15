@@ -118,10 +118,11 @@ export const setIsLoadingAC = (isLoading: boolean) =>
 
 export type AddToDoListACType = ReturnType<typeof addToDoListAC>;
 
-export const addToDoListAC = (title: string) =>
+export const addToDoListAC = (title: string, id: number) =>
   ({
     type: 'ADD-TO-DO',
     title,
+    id,
   } as const);
 
 export type ChangeToDoStatusACType = ReturnType<typeof changeToDoStatusAC>;
@@ -169,13 +170,76 @@ export const setCurrentPageAC = (currentPage: number) =>
 export const getToDoListsTC =
   (pageSize: number, currentPage: number) => (dispatch: Dispatch) => {
     dispatch(setIsLoadingAC(true));
-    toDoAPI.getToDoLists(pageSize, currentPage).then(res => {
-      dispatch(getToDoListsAC(res.data));
-    });
+    toDoAPI
+      .getToDoLists(pageSize, currentPage)
+      .then(res => {
+        dispatch(getToDoListsAC(res.data));
+      })
+      .catch(err => {})
+      .finally(() => {
+        dispatch(setIsLoadingAC(false));
+      });
   };
 
 export const getToDoListsCountTC = () => (dispatch: Dispatch) => {
   toDoAPI.getToDoListsCount().then(res => {
     dispatch(setToDoListsCountAC(res.data.length));
   });
+};
+
+export const changeToDoListStatusTC =
+  (id: number, completed: boolean) => (dispatch: Dispatch) => {
+    dispatch(setIsLoadingAC(true));
+    toDoAPI
+      .changeToDoListStatus(id, completed)
+      .then(res => {
+        dispatch(changeToDoStatusAC(id, completed));
+        console.log(res.data);
+      })
+      .catch(err => {})
+      .finally(() => {
+        dispatch(setIsLoadingAC(false));
+      });
+  };
+
+export const changeToDoListTitleTC =
+  (id: number, title: string) => (dispatch: Dispatch) => {
+    dispatch(setIsLoadingAC(true));
+    toDoAPI
+      .changeToDoListTitle(id, title)
+      .then(res => {
+        dispatch(changeToDoTitleAC(id, title));
+        console.log(res.data);
+      })
+      .catch(err => {})
+      .finally(() => {
+        dispatch(setIsLoadingAC(false));
+      });
+  };
+export const removeToDoListTC = (id: number) => (dispatch: Dispatch) => {
+  dispatch(setIsLoadingAC(true));
+  toDoAPI
+    .removeToDoList(id)
+    .then(res => {
+      dispatch(deleteToDoAC(id));
+      console.log(res.data);
+    })
+    .catch(err => {})
+    .finally(() => {
+      dispatch(setIsLoadingAC(false));
+    });
+};
+
+export const addNewToDoListTC = (title: string) => (dispatch: Dispatch) => {
+  dispatch(setIsLoadingAC(true));
+  toDoAPI
+    .addNewToDoList(title)
+    .then(res => {
+      dispatch(addToDoListAC(title, res.data.id));
+      console.log(res.data);
+    })
+    .catch(err => {})
+    .finally(() => {
+      dispatch(setIsLoadingAC(false));
+    });
 };

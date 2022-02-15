@@ -1,6 +1,12 @@
-import React, { KeyboardEvent, ReactElement, useState } from 'react';
+import React, {
+  ChangeEvent,
+  KeyboardEvent,
+  ReactElement,
+  useCallback,
+  useState,
+} from 'react';
 import EditableField from './EditableField';
-import { changeToDoTitleAC } from '../../BLL/appReducer';
+import { changeToDoListTitleTC, changeToDoTitleAC } from '../../BLL/appReducer';
 import { useDispatch } from 'react-redux';
 
 type PropsType = {
@@ -8,34 +14,42 @@ type PropsType = {
   toDoId: number;
 };
 
-const EditableFieldContainer = ({ text, toDoId }: PropsType): ReactElement => {
+const EditableFieldContainer = React.memo(({ text, toDoId }: PropsType): ReactElement => {
   const dispatch = useDispatch();
   const [editMode, setEditMode] = useState<boolean>(false);
-  const showInput = (): void => {
+  const [inputValue, setInputValue] = useState<string>(text);
+  const showInput = useCallback((): void => {
     setEditMode(true);
+  }, []);
+  const onInputChangeHandle = (e: ChangeEvent<HTMLInputElement>): void => {
+    setInputValue(e.currentTarget.value);
   };
-  const hideInput = (): void => {
+  const changeToDoTitle = useCallback((): void => {
+    dispatch(changeToDoListTitleTC(toDoId, inputValue));
+    dispatch(changeToDoTitleAC(toDoId, inputValue));
     setEditMode(false);
-  };
-  const onKeyPressHandle = (e: KeyboardEvent<HTMLInputElement>): void => {
-    if (e.key === 'Enter') {
-      hideInput();
-    }
-  };
-  const changeToDoTitle = (id: number, title: string): void => {
-    dispatch(changeToDoTitleAC(id, title));
-  };
+  }, [dispatch, toDoId, inputValue]);
+  const onKeyPressHandle = useCallback(
+    (e: KeyboardEvent<HTMLInputElement>): void => {
+      if (e.key === 'Enter') {
+        changeToDoTitle();
+        setEditMode(false);
+      }
+    },
+    [changeToDoTitle],
+  );
   return (
     <EditableField
       editMode={editMode}
       showInput={showInput}
-      hideInput={hideInput}
       text={text}
       toDoId={toDoId}
       changeToDoTitle={changeToDoTitle}
       onKeyPressHandle={onKeyPressHandle}
+      inputValue={inputValue}
+      onInputChangeHandle={onInputChangeHandle}
     />
   );
-};
+});
 
 export default EditableFieldContainer;

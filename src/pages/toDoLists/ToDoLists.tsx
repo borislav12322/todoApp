@@ -31,6 +31,7 @@ const ToDoLists = React.memo(
         <Paginator />
       </div>
       <div className={s.addToDoWrapper}>
+        <span className={s.sign}>Add New </span>
         <input
           className={s.newToDoInput}
           type="text"
@@ -38,7 +39,12 @@ const ToDoLists = React.memo(
           onChange={newTitleInputHandle}
           onKeyPress={newTitleOnKeyPressHandle}
         />
-        <button className={s.addNewToDoButton} type="button" onClick={addToDo}>
+        <button
+          className={s.addNewToDoButton}
+          type="button"
+          onClick={addToDo}
+          disabled={!newTitleValue}
+        >
           <img src={PlusBtn} alt="add btn" />
         </button>
       </div>

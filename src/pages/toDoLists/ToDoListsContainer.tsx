@@ -2,6 +2,7 @@ import React, {
   ChangeEvent,
   KeyboardEvent,
   ReactElement,
+  useCallback,
   useEffect,
   useState,
 } from 'react';
@@ -9,12 +10,13 @@ import ToDoLists from './ToDoLists';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppRootStateType } from '../../BLL/store';
 import {
-  addToDoListAC,
+  addNewToDoListTC,
+  changeToDoListStatusTC,
   changeToDoStatusAC,
-  deleteToDoAC,
   getToDoListsCountTC,
   getToDoListsTC,
   InitialStateType,
+  removeToDoListTC,
 } from '../../BLL/appReducer';
 
 const ToDoListsContainer = (): ReactElement => {
@@ -25,31 +27,42 @@ const ToDoListsContainer = (): ReactElement => {
     InitialStateType
   >(state => state.appReducer);
 
-  const changeToDoStatus = (id: number, status: boolean): void => {
-    dispatch(changeToDoStatusAC(id, status));
-  };
-  const addToDo = (): void => {
+  const changeToDoStatus = useCallback(
+    (id: number, status: boolean): void => {
+      dispatch(changeToDoListStatusTC(id, status));
+      dispatch(changeToDoStatusAC(id, status));
+    },
+    [dispatch],
+  );
+  const addToDo = useCallback((): void => {
     if (newTitleValue) {
-      dispatch(addToDoListAC(newTitleValue));
+      dispatch(addNewToDoListTC(newTitleValue));
       setNewTitleValue('');
     }
-  };
-  const newTitleOnKeyPressHandle = (e: KeyboardEvent<HTMLInputElement>): void => {
-    if (e.key === 'Enter') {
-      addToDo();
-    }
-  };
-  const newTitleInputHandle = (e: ChangeEvent<HTMLInputElement>): void => {
+  }, [newTitleValue, dispatch]);
+  const newTitleOnKeyPressHandle = useCallback(
+    (e: KeyboardEvent<HTMLInputElement>): void => {
+      if (e.key === 'Enter') {
+        addToDo();
+      }
+    },
+    [addToDo],
+  );
+  const newTitleInputHandle = useCallback((e: ChangeEvent<HTMLInputElement>): void => {
     setNewTitleValue(e.currentTarget.value);
-  };
-  const removeToDoList = (id: number): void => {
-    dispatch(deleteToDoAC(id));
-  };
+  }, []);
+  const removeToDoList = useCallback(
+    (id: number): void => {
+      dispatch(removeToDoListTC(id));
+    },
+    [dispatch],
+  );
+  console.log(toDoLists);
 
   useEffect(() => {
     dispatch(getToDoListsTC(pageSize, currentPage));
     dispatch(getToDoListsCountTC());
-  }, []);
+  }, [dispatch]);
 
   return (
     <ToDoLists

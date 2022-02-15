@@ -1,5 +1,6 @@
 import React, { ReactElement } from 'react';
 import s from './mainPage.module.css';
+import todoImg from '../../assets/images/todoImg.jpeg';
 
 const MainPage = (): ReactElement => (
   <div className={s.mainPageWrapper}>
@@ -25,6 +26,7 @@ const MainPage = (): ReactElement => (
         each one off your list, your confidence will increase
       </p>
     </div>
+    <img className={s.img} src={todoImg} alt="todo" />
   </div>
 );
 
