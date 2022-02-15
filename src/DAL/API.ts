@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { ToDoListType } from '../BLL/appReducer';
 
 const axiosInstance = axios.create({
   baseURL: 'https://jsonplaceholder.typicode.com/',
@@ -6,8 +7,8 @@ const axiosInstance = axios.create({
 
 export const toDoAPI = {
   getToDoLists: (pageSize: number, currentPage: number) =>
-    axiosInstance.get(`todos?_limit=${pageSize}&_page=${currentPage}`),
-  getToDoListsCount: () => axiosInstance.get('todos'),
+    axiosInstance.get<ResponseType>(`todos?_limit=${pageSize}&_page=${currentPage}`),
+  getToDoListsCount: () => axiosInstance.get<ResponseType>('todos'),
   changeToDoListStatus: (id: number, completed: boolean) =>
     axiosInstance.put(`todos/${id}`, { completed }),
   changeToDoListTitle: (id: number, title: string) =>
@@ -18,3 +19,5 @@ export const toDoAPI = {
       title,
     }),
 };
+
+type ResponseType = ToDoListType[];
